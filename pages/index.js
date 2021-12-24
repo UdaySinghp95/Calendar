@@ -11,7 +11,7 @@ export default function Home() {
 
   const handleEvent = (e) => {
     e.preventDefault();
-    setVisible(false);
+    setVisible((visible) => !visible);
 
     console.log(time, disp, date);
 
@@ -26,6 +26,7 @@ export default function Home() {
   };
 
   const handleVisible = (e) => {
+    e.preventDefault();
     setVisible((visible) => !visible);
     console.log("got it");
   };
@@ -42,18 +43,23 @@ export default function Home() {
 
       <main>
         <Calender onChange={setDate} />
-        <button onClick={handleVisible}>Click here to add Event</button>
-
-        {event?.map(
-          (e, index) =>
-            e.date.toDateString() == date.toDateString() && (
-              <div key={index}>
-                <span style={{ padding: "1rem" }}>Description {e.disp} </span>
-                <span style={{ padding: "1rem" }}>StartTime {e.startTime}</span>
-                <span style={{ padding: "1rem" }}> EndTime {e.endTime}</span>
-              </div>
-            )
-        )}
+        <button onClick={handleVisible} style={{ cursor: "pointer" }}>
+          Click here to add Event
+        </button>
+        <div style={{ margin: "1rem" }}>
+          {event?.map(
+            (e, index) =>
+              e.date.toDateString() == date.toDateString() && (
+                <div key={index}>
+                  <span style={{ padding: "1rem" }}>
+                    StartTime {e.startTime}
+                  </span>
+                  <span style={{ padding: "1rem" }}> EndTime {e.endTime}</span>
+                  <span style={{ padding: "1rem" }}>Description {e.disp} </span>
+                </div>
+              )
+          )}
+        </div>
         {visible && (
           <div>
             <input
